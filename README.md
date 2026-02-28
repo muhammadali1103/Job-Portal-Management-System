@@ -148,3 +148,4 @@ php artisan test
 ## License
 
 This project is private/custom. Add your preferred license before publishing if needed.
+
