@@ -1,0 +1,20 @@
+php artisan tinker
+
+use App\Models\Job;
+use Illuminate\Support\Str;
+
+$jobs = Job::whereNull('slug')->get();
+foreach ($jobs as $job) {
+    $slug = Str::slug($job->title);
+    $originalSlug = $slug;
+    $counter = 1;
+    while (Job::where('slug', $slug)->where('id', '!=', $job->id)->exists()) {
+        $slug = $originalSlug . '-' . $counter;
+        $counter++;
+    }
+    $job->slug = $slug;
+    $job->save();
+    echo "Generated: {$job->title} -> {$slug}\n";
+}
+echo "Done!\n";
+exit

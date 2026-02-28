@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Kuwait Jobs') }} - @yield('title', 'Find Your Dream Job')</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="@yield('meta_description', 'Find your dream job in Kuwait. Browse thousands of job opportunities from top employers. Apply directly via WhatsApp, phone, or email - no registration required.')">
+    <meta name="keywords"
+        content="kuwait jobs, jobs in kuwait, kuwait careers, employment kuwait, job vacancies kuwait, @yield('meta_keywords', 'part time jobs, full time jobs, driver jobs')">
+    <meta name="author" content="Kuwait Jobs">
+    <meta name="robots" content="@yield('robots', 'index, follow')">
+    <link rel="canonical" href="@yield('canonical', url()->current())">
+
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://fonts.bunny.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('og_title', config('app.name') . ' - Find Your Dream Job in Kuwait')">
+    <meta property="og:description"
+        content="@yield('og_description', 'Browse thousands of job opportunities from top employers in Kuwait. Apply directly without registration.')">
+    <meta property="og:image" content="@yield('og_image', asset('images/og-image.jpg'))">
+    <meta property="og:site_name" content="Kuwait Jobs">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title"
+        content="@yield('twitter_title', config('app.name') . ' - Find Your Dream Job in Kuwait')">
+    <meta name="twitter:description"
+        content="@yield('twitter_description', 'Browse thousands of job opportunities from top employers in Kuwait.')">
+    <meta name="twitter:image" content="@yield('twitter_image', asset('images/og-image.jpg'))">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS (via CDN for standalone usage) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Compact Mode - Manual Sizing */
+        body {
+            font-size: 0.8125rem;
+            /* 13px Base */
+            line-height: 1.5;
+        }
+
+        /* Headings - Scaled Down */
+        h1,
+        .h1 {
+            font-size: 1.5rem !important;
+        }
+
+        h2,
+        .h2 {
+            font-size: 1.25rem !important;
+        }
+
+        h3,
+        .h3 {
+            font-size: 1.1rem !important;
+        }
+
+        h4,
+        .h4 {
+            font-size: 1rem !important;
+        }
+
+        h5,
+        .h5 {
+            font-size: 0.9rem !important;
+        }
+
+        /* Compact Layout Elements */
+        .container,
+        .container-fluid {
+            max-width: 1200px;
+            /* Restrict width slightly */
+        }
+
+        .card {
+            margin-bottom: 1rem !important;
+        }
+
+        .card-body {
+            padding: 1rem !important;
+            /* Compact padding */
+        }
+
+        /* Form Elements - Compact */
+        .form-control,
+        .form-select,
+        .btn {
+            font-size: 0.85rem !important;
+            padding: 0.375rem 0.75rem !important;
+            /* Smaller padding */
+            height: auto !important;
+        }
+
+        .form-label {
+            font-size: 0.8rem !important;
+            margin-bottom: 0.25rem !important;
+        }
+
+        /* Icons */
+        .bi {
+            font-size: 1rem !important;
+            /* Force smaller icons */
+        }
+
+        /* Custom Overrides */
+        a {
+            text-decoration: none;
+        }
+
+        /* Navbar specific compaction if needed */
+        .navbar-brand img {
+            height: 32px !important;
+            /* Smaller logo */
+            width: auto;
+        }
+
+        .nav-link {
+            font-size: 0.85rem !important;
+        }
+    </style>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <!-- Organization & Website Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Kuwait Jobs",
+      "url": "{{ url('/') }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "{{ url('/jobs') }}?search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Kuwait Jobs",
+      "url": "{{ url('/') }}",
+      "logo": "{{ asset('images/logo.png') }}",
+      "sameAs": [
+        "https://www.facebook.com/kuwaitjobs",
+        "https://twitter.com/kuwaitjobs",
+        "https://www.linkedin.com/company/kuwaitjobs"
+      ]
+    }
+    </script>
+
+    <!-- Page-specific Schema -->
+    @yield('schema')
+</head>
+
+<body class="font-sans antialiased bg-light d-flex flex-column min-vh-100">
+    @include('layouts.navigation')
+
+    <!-- Page Heading -->
+    @if (isset($header))
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endif
+
+    <!-- Breadcrumbs -->
+    @yield('breadcrumbs')
+
+    <!-- Page Content -->
+    <main class="flex-grow-1">
+        @yield('content')
+    </main>
+
+    @include('layouts.footer')
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
